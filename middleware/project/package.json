@@ -1,0 +1,15 @@
+{
+  "name": "firstnode",
+  "version": "1.0.0",
+  "description": "this is my first node with version manager",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "yunrui huang",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
