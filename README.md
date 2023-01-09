@@ -12,7 +12,7 @@
 
 - 本框架由四大部分组成
   1. 外部传感器 （主要使用ESP32-wifi提供网络连接以及一些基础接口）
-  2. 中间件连接 （搭建与树莓派的ASP.NET Web API提供接口接收数据并存入数据库）
+  2. 中间件连接 （搭建与树莓派的ExpressJs提供接口接收数据并存入数据库）
   3. 数据库 （由FreeNAS提供稳定的数据存储环境来搭建数据库）
   4. 用户界面 （Linux服务器可以承担这部分功能，稳定性并不做要求）
 - 一些难点
@@ -34,11 +34,9 @@
 
 ### 中间件
 
-- 循序渐进学.NET core Web API
-  - https://www.52interview.com/book/8/72
-- web API反向代理启动
-  - Nginx
-  - Apache
+- NodeJs
+  - Express JS
+
 
 
 
