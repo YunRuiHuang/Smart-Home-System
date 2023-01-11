@@ -7,9 +7,9 @@ router.post("/:machineId",(req,res)=>{
     const temp = req.body.temp;
     const humidity = req.body.humidity;
     const light = req.body.light;
-    let date = new date();
+    const date = new Date();
     if(!temp || !humidity || !light){
-        res.send(req.params.machineId + "fail! missing data");
+        res.send(req.params.machineId + "fail! missing data at " + date);
     }else{
         //TODO
         //send the data to database

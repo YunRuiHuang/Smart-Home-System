@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const routes = require('routers.js');
+const routes = require('./routes');
 const path = require('path');
 
 app.use(express.json());
@@ -19,8 +19,8 @@ app.get('/image/:img',(req,res)=>{
 
 });
 
-app.use("/dataPort",router.dataPort);
-app.use("/user",routes.user);
+app.use("/dataPort",routes.dataPort);
+app.use("/user",routes.users);
 //app.get('/:data',(req,res)=>{res.send(req.params.data)});
 
 app.listen(3000,()=>{console.log("server run at port 3000")});
