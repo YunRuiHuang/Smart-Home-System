@@ -19,7 +19,7 @@ app.get('/image/:img',(req,res)=>{
 
 });
 
-
+app.use("/dataPort",router.dataPort);
 app.use("/user",routes.user);
 //app.get('/:data',(req,res)=>{res.send(req.params.data)});
 

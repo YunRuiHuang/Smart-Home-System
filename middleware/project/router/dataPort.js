@@ -15,7 +15,7 @@ router.post("/:machineId",(req,res)=>{
         //TODO
         //send the data to database
 
-        res.send(req.params.machineId + "success");
+        res.send(machineId + "success");
     }
     
 });
