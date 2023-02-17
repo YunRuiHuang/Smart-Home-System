@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const mysql = require('mysql');
+const date = require('date-and-time');
+const math = require('mathjs');
 
-var con = mysql.createConnection({
+var pool = mysql.createPool({
+    connectionLimit : 10,
     host: 'localhost',
     user: '1234',
     password: '1234',
@@ -18,20 +21,23 @@ var con = mysql.createConnection({
   // })
 
   async function runsql(sql){
-    if(con.state === 'disconnected'){
-      con.connect((err) =>{
-        if(err){
-          console.log('file to connect' + err.message);
-          return;
-        };
-        console.log('connect success');
-      })
-    }
+    
     return new Promise((resolve, reject)=>{
-      con.query(sql, (err, result) =>{
-        if(err) reject(err);
-        resolve(result);
+      pool.getConnection((err,connection)=>{
+        if(err){
+          connection.release();
+          reject(err);
+        } 
+        connection.query(sql,(err,rows)=>{
+          connection.release();
+          if(err) reject(err);
+          resolve({rows:rows});
+        })
       })
+      // con.query(sql, (err, result) =>{
+      //   if(err) reject('err');
+      //   resolve(result);
+      // })
     })
   }
 
@@ -51,13 +57,13 @@ var con = mysql.createConnection({
 
 
 
-router.post("/:machineId",async (req,res)=>{
+router.post("/:machineId",(req,res)=>{
     const machineId = req.params.machineId;
     const temp = req.body.temp;
     const humidity = req.body.humidity;
     const bright = req.body.bright;
-    const date = new Date();
-    let time = "22:22-01/01/2000";
+    const now = new Date();
+    const time = date.format(now,'YYYY-MM-DD HH:mm');
     if(!temp || !humidity || !bright){
         res.send(req.params.machineId + "fail! missing data at " + date);
     }else{
@@ -69,17 +75,60 @@ router.post("/:machineId",async (req,res)=>{
         runsql(sql).then((result)=>{
           console.log(result);
           res.send(machineId + " : " + JSON.stringify(result));
+        }).catch((err)=>{
+          console.log(err);
+          res.status(500).json(machineId + ": database error");
         })
         
     }
     
 });
 
+
 router.get("/",(req,res)=>{
   let sql = "SELECT * FROM espdata";
   runsql(sql).then((result)=>{
     console.log(result);
     res.send(JSON.stringify(result));
+  }).catch((err)=>{
+    console.log(err);
+    res.status(500).json(machineId + ": database error");
+  })
+});
+
+router.get("/:machineId",(req,res)=>{
+  let sql = "SELECT * FROM espdata where machine_id = ";
+  sql = sql + req.params.machineId + ";";
+  runsql(sql).then((result)=>{
+    console.log(result);
+    res.send(JSON.stringify(result));
+  }).catch((err)=>{
+    console.log(err);
+    res.status(500).json(machineId + ": database error");
+  })
+});
+
+router.get("/:machineId/:month/:day/:year/:hour",(req,res)=>{
+  let sql = "SELECT * FROM espdata where machine_id = ";
+  sql = sql + req.params.machineId + " and time > ";
+
+  let time = "'" + req.params.year + "-" + req.params.month + "-" + req.params.day;
+  if(req.params.hour >= 0 && req.params.hour <= 24){
+    //let hour = math.mod((req.params.hour + 5),24);
+    time = time + " " + req.params.hour;
+    sql = sql + time + "'and time < " + time + "' + INTERVAL 1 hour;";
+  }else{
+    sql = sql + time + "' and time < " + time + "' + INTERVAL 1 day;";
+  }
+
+  console.log(sql);
+
+  runsql(sql).then((result)=>{
+    console.log(result);
+    res.send(JSON.stringify(result));
+  }).catch((err)=>{
+    console.log(err);
+    res.status(500).json(machineId + ": database error");
   })
 });
 
