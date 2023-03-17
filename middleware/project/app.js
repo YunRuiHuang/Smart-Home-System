@@ -5,7 +5,7 @@ const path = require('path');
 
 app.use(express.json());
 
-app.get('/',(req,res)=>{res.sendFile(path.join(__dirname,'views/html/home.html'))});
+app.get('/',(req,res)=>{res.sendFile(path.join(__dirname,'views/html/jump.html'))});
 app.get('/image/:img',(req,res)=>{
 	let file;
 	const address = "/public/image/" + req.params.img;
@@ -21,6 +21,19 @@ app.get('/image/:img',(req,res)=>{
 app.get('/script/:js',(req,res)=>{
 	let file;
 	const address = "/public/script/" + req.params.js;
+	try{
+	file = path.join(__dirname,address);
+	//res.sendFile(file);
+	} catch (err){
+	res.send("no such file");
+	}
+	res.sendFile(file);
+
+});
+
+app.get('/page/:html',(req,res)=>{
+	let file;
+	const address = "/views/html/" + req.params.html;
 	try{
 	file = path.join(__dirname,address);
 	//res.sendFile(file);

@@ -14,9 +14,9 @@
 
 
     //controller function
-    firstController.$inject = ['$scope','$filter','firstFilter','dataportFilter'];
+    firstController.$inject = ['$scope','$filter','$http','firstFilter','dataportFilter'];
 
-    function firstController($scope, $filter, firstFilter, dataportFilter) {
+    function firstController($scope, $filter, $http, firstFilter, dataportFilter) {
 
         //for the input string
         $scope.value = "test";
@@ -31,6 +31,15 @@
         $scope.links = "";
         $scope.changeTime = ()=>{
             $scope.links = dataportFilter($scope.inputHour);
+            var response = $http({
+                method:"GET",
+                url:("/dataport/4"+$scope.links)
+            });
+            response.then((res)=>{
+                $scope.data = res.data;
+            },(err)=>{
+                this.err = "err";
+            })
         }
 
         //for the kana image
@@ -51,6 +60,15 @@
 
         //$scope.$apply(function()) can work in jquary
 
+
+        //test ajax
+        $scope.resData = "";
+        $scope.getRequest = ()=>{
+            $http.get("/dataport/1").then((res)=>{
+                console.log(res.data.row);
+                //$scope.resData = res.data;
+            });
+        }
     }
 
     //filter function

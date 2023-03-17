@@ -89,7 +89,7 @@ router.get("/",(req,res)=>{
   let sql = "SELECT * FROM espdata";
   runsql(sql).then((result)=>{
     console.log(result);
-    res.send(JSON.stringify(result));
+    res.json(result);
   }).catch((err)=>{
     console.log(err);
     res.status(500).json(machineId + ": database error");
@@ -101,7 +101,7 @@ router.get("/:machineId",(req,res)=>{
   sql = sql + req.params.machineId + ";";
   runsql(sql).then((result)=>{
     console.log(result);
-    res.send(JSON.stringify(result));
+    res.json(result);
   }).catch((err)=>{
     console.log(err);
     res.status(500).json(machineId + ": database error");
@@ -125,7 +125,7 @@ router.get("/:machineId/:month/:day/:year/:hour",(req,res)=>{
 
   runsql(sql).then((result)=>{
     console.log(result);
-    res.send(JSON.stringify(result));
+    res.json(result);
   }).catch((err)=>{
     console.log(err);
     res.status(500).json(machineId + ": database error");

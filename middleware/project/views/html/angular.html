@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <title>angular testing page</title>
+    <link rel="icon" type="image/x-icon" href="/image/favicon.ico">
+    <script src="/script/angular.min.js"></script>
+    <script src="/script/angular.js"></script>
+</head>
+<body>
+    <h1>this is angular testing page</h1>
+    <a href="/">back to home page</a>
+
+    <div ng-controller='controller1 as ctrl1'>
+        <input type="text" ng-model="testingObj" ng-keyup="testingFunc()">
+        <p>the input length is {{testingObj | testing}}, and it is {{testingFunc()}}</p>
+        <div ng-controller='controller2 as ctrl2'>
+            <p>the value of controller 2 is {{ctrl2.testingObj2}} with length {{ctrl2.testingFilter(ctrl2.testingObj2)}}</p>
+            <p>same as controller2 {{testingObj}}, length is {{testingObj | testing}} </p>
+        </div>
+
+    </div>
+
+    <h2>testing services for controller 3 and 4</h2>
+    <div ng-controller="controller3 as ctrl3">
+        <input type="text" ng-model="ctrl3.itemName" placeholder="Name">
+        <input type="text" ng-model="ctrl3.itemValue" placeholder="Value">
+        <button ng-click="ctrl3.addItem()">submit</button>
+    </div>
+
+    <div ng-controller="controller4 as ctrl4">
+        <ul>
+            <li ng-repeat="item in ctrl4.items"> 
+                {{item.value}} of {{item.name}}
+                <button ng-click="ctrl4.removeItem($index)">remove</button>
+            </li>
+        </ul>
+    </div>
+
+    <h2>testing factory for controller5</h2>
+    <div ng-controller="controller5 as ctrl5">
+        <input type="text" ng-model="ctrl5.itemName" placeholder="Name">
+        <input type="text" ng-model="ctrl5.itemValue" placeholder="Value">
+        <button ng-click="ctrl5.addItem()">submit</button>
+        <ul>
+            <li ng-repeat="item in ctrl5.items"> 
+                {{item.value}} of {{item.name}}
+                <button ng-click="ctrl5.removeItem($index)">remove</button>
+            </li>
+        </ul>
+        <p>{{ctrl5.err}}</p>
+    </div>
+
+    <h2>testing provider and np-if/ng-show/ng-hide for controller6</h2>
+    <div ng-controller="controller6 as ctrl6">
+        <input type="text" ng-model="ctrl6.itemName" placeholder="Name">
+        <input type="text" ng-model="ctrl6.itemValue" placeholder="Value">
+        <button ng-click="ctrl6.addItem()">submit</button>
+        <ul>
+            <li ng-repeat="item in ctrl6.items"> 
+                {{item.value}} of {{item.name}}
+                <button ng-click="ctrl6.removeItem($index)">remove</button>
+            </li>
+        </ul>
+        <p ng-show="ctrl6.err"> err = {{ctrl6.err}}</p>
+    </div>
+
+    <h2>testing asynchronous with promises and $q for controller7</h2>
+    <div ng-controller="controller7 as ctrl7">
+        <input type="text" ng-model="ctrl7.itemName" placeholder="Name">
+        <input type="text" ng-model="ctrl7.itemValue" placeholder="Value">
+        <button ng-click="ctrl7.addItem()">submit</button>
+        <ul>
+            <li ng-repeat="item in ctrl7.items"> 
+                {{item.value}} of {{item.name}}
+                <button ng-click="ctrl7.removeItem($index)">remove</button>
+            </li>
+        </ul>
+        <p ng-show="ctrl7.err"> err = {{ctrl7.err}}</p>
+    </div>
+
+    <h2>testing http</h2>
+    <div ng-controller="controller8 as ctrl8">
+        <ul>
+            <li ng-repeat="item in ctrl8.data.rows">
+                <p>recode ID :{{item.recode_id}}</p>
+                <p>temp:	{{item.temp}}</p>
+                <p>humidity:	{{item.humidity}}</p>
+                <p>bright:	{{item.bright}}</p>
+                <p>time:	{{item.time}}</p>
+            </li>
+        </ul>
+    </div>
+
+</body>
+
+</html>
