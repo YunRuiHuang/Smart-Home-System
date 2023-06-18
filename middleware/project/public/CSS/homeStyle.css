@@ -1,0 +1,38 @@
+/* for the tmp part */
+.part1 {
+    height: 31.5%;
+    width: 100%;
+    /* background-color: aqua; */
+    /* border-bottom: double; */
+    overflow: hidden;
+}
+
+/* for the notification */
+.part2 {
+    height: 60%;
+    width: 100%;
+    background-color: rgba(82, 68, 68, 0.39);
+    border-top: solid;
+    overflow: auto;
+}
+
+.envir {
+    margin: 3%;
+    text-align: center;
+    height:auto;
+    width: 43%;
+    float: left;
+    border: 1px solid rgb(78, 9, 238);
+    border-radius: 15px;
+}
+
+.notifi-top{
+    text-align: left;
+    width: 100%;
+}
+
+.notification {
+    text-align: center;
+    width: 100%;
+}
+

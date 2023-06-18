@@ -10,6 +10,10 @@
     <h1>this is angular testing page</h1>
     <a href="/">back to home page</a>
 
+    <video id="videoPlayer" width="1080" height="720" controls>
+        <source src='/video/2022.mp4?path=["1","2"]' type="video/mp4">
+    </video>
+
     <div ng-controller='controller1 as ctrl1'>
         <input type="text" ng-model="testingObj" ng-keyup="testingFunc()">
         <p>the input length is {{testingObj | testing}}, and it is {{testingFunc()}}</p>

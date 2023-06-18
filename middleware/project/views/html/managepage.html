@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <title>manage page</title>
+    <link rel="stylesheet" href="/CSS/background.css">
+    <link rel="stylesheet" href="/CSS/manageStyle.css">
+    <script src="/script/angular.min.js"></script>
+    <script src="/script/manage.js"></script>
+</head>
+
+<body>
+    <!-- div for jump to top -->
+    <div id="top"></div>
+
+    <!-- the flex class, from background.css -->
+    <div class="f">
+
+        <!-- the left 'aside' class in background.css, navigate to each page -->
+        <div class="left">
+            <div class="title"> 
+                <h2>Logo</h2>
+            </div>
+            <a href="/page/homepage.html">
+                <div class="navigation">
+                    <p>Home page</p>
+                </div>
+            </a> 
+            <a href="/page/managepage.html">
+                <div class="navigation">
+                    <p>Manage page</p>
+                </div>
+            </a> 
+            <a href="/page/datapage.html">
+                <div class="navigation">
+                    <p>Data page</p>
+                </div>
+            </a> 
+            <a href="/page/serverpage.html">
+                <div class="navigation">
+                    <p>Server page</p>
+                </div>
+            </a> 
+            <a href="/page/videopage.html">
+                <div class="navigation">
+                    <p>Video page</p>
+                </div>
+            </a> 
+        </div>
+
+        <!-- the right class in background.css, use to hold page infomation -->
+        <div class="right" ng-controller="controller1 as ctrl1">
+            <!-- page title/name -->
+            <div class="title"> 
+                <h2>Manage page</h2>
+            </div>
+
+            <!-- page information -->
+            <div class="list-page">
+
+                <!-- each item hold the image, name, and status of the machine -->
+                <div class="item" ng-repeat="machine in ctrl1.machine">
+                    <img src="/image/machine.jpg" alt="machine image" width="150px" height="150px">
+                    <!-- image source : https://www.amazon.com/HiLetgo-ESP-WROOM-32-Development-Microcontroller-Integrated/dp/B0718T232Z -->
+                    <br>
+                    <a href="/page/datapage.html">ESP32 sensor</a>
+                    <p>machine {{machine.machineId}} status : {{machine.status}}</p>
+                </div>
+                <!-- <div class="item">
+                    <img src="/image/machine.jpg" alt="machine image" width="150px" height="150px">
+                    <br>
+                    <a href="/page/datapage.html">ESP32 sensor</a>
+                    <p>item status : online</p>
+                </div>
+                <div class="item">
+                    <img src="/image/machine.jpg" alt="machine image" width="150px" height="150px">
+                    <br>
+                    <a href="/page/datapage.html">ESP32 sensor</a>
+                    <p>item status : online</p>
+                </div> -->
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <!-- footer tag, hold the link to my email, github, back to homepage and back to top -->
+    <footer>
+        <a href="mailto:yhuang35@albany.edu">| Email Me |</a>
+        <a href="https://github.com/YunRuiHuang">| My Github |</a>
+        <a href="/page/homepage.html">| Homepage |</a>
+        <br>
+        <a href="#top">back to top</a>
+
+    </footer>
+</body>
+
+
+</html>

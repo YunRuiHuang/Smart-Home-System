@@ -2,11 +2,11 @@
 #include <HTTPClient.h>
 #include <DHT.h>
 
-const char* ssid="###";
-const char* password="###";
+const char* ssid="Fios-vT4BM";
+const char* password="P@55w0rd";
 const int machineId = 4;
-const String serverPath = "###/dataPort/";
-
+const String serverPath = "http://192.168.1.188:3000/dataPort/";
+int postCounter = 0;
 
 DHT dht(14,DHT11);
 
@@ -18,7 +18,7 @@ Serial.begin(115200);
 pinMode(35, INPUT);
 dht.begin();
 connectWifi();
-//HttpGet(); 
+HttpGet(); 
 }
 
 void loop() {
@@ -53,9 +53,14 @@ void connectWifi(){
   Serial.print("Connecting to ");
   Serial.println(ssid);
 
+  int counter = 0;
   while (WiFi.status() != WL_CONNECTED) { // Wait for the Wi-Fi to connect
     delay(100);
     Serial.print('>');
+    counter++;
+    if(counter > 100){
+      return;
+    }
   }
 
   Serial.println("\n =======");
@@ -70,7 +75,7 @@ void HttpGet(){
     connectWifi();
   }
   HTTPClient http;
-  String targetPath = serverPath;
+  String targetPath = serverPath + "1";
   
   // Your Domain name with URL path or IP address with path
   http.begin(targetPath.c_str());
@@ -96,6 +101,11 @@ void HttpPost(int machineId,float temp,float humidity,int bright){
     connectWifi();
   }
   
+  postCounter++;
+  if(postCounter > 50){
+    ESP.restart();
+  }
+
   HTTPClient http;
   WiFiClient client;
   String targetPath = serverPath + machineId;

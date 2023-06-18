@@ -1,0 +1,77 @@
+html, body{
+    height: 100%;
+    background-color: teal;
+}
+
+
+/* setup the flex */
+.f {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    height: 100%;
+    border-style: solid;
+    border-width: 3px;
+}
+
+/* for the left nav part of page */
+.left {
+    border: 1px #000000;
+    text-align: center;
+    height: 99%;
+    background-color: #ffffff;
+    flex: 1 100px;
+    float: left;
+    border-right: solid;
+    border-width: 3px;
+}
+
+/* for the right body part */
+.right {
+    height: 99%;
+    background-color: #ffffff;
+    flex: 4 400px;
+    float: left;
+}
+
+/* for the logo and page title */
+.title {
+    text-align: center;
+    height: 8%;
+    width: 100%;
+    background-color: aqua;
+    border-bottom: double;
+    overflow: auto;
+}
+
+/* for each nav link */
+.navigation {
+    text-align: center;
+    height: 70px;
+    width: 100%;
+    background-color: aqua;
+    border-bottom: double;
+    overflow: auto;
+}
+
+/* footer */
+footer{
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+/* Psuedo class for link */
+a:link {
+    color: blue;
+  }
+  
+  /* visited link */
+  a:visited {
+    color: black;
+  }
+  
+  /* mouse over link */
+  a:hover {
+    color: rgb(49, 214, 118);
+  }

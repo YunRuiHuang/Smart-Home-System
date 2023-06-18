@@ -108,6 +108,18 @@ router.get("/:machineId",(req,res)=>{
   })
 });
 
+router.get("/:machineId/:num",(req,res)=>{
+  let sql = "SELECT * FROM espdata where machine_id = ";
+  sql = sql + req.params.machineId + " order by recode_id desc limit " + req.params.num + ";";
+  runsql(sql).then((result)=>{
+    console.log(result);
+    res.json(result);
+  }).catch((err)=>{
+    console.log(err);
+    res.status(500).json(machineId + ": database error");
+  })
+});
+
 router.get("/:machineId/:month/:day/:year/:hour",(req,res)=>{
   let sql = "SELECT * FROM espdata where machine_id = ";
   sql = sql + req.params.machineId + " and time > ";

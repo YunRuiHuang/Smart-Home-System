@@ -1,11 +1,25 @@
 const mysql = require('mysql'); 
 const date = require('date-and-time');
+const path = require('path');
+const fs = require('fs');
 
-const now  =  new Date();
+const dirPath = path.join(__dirname,"./")
+fs.readdir(dirPath,(err,files)=>{
+    if(err){
+        console.log(err)
+    }else{
+        console.log(files)
+    }
+})
+
+
+
+
+// const now  =  new Date();
   
 // Formatting the date and time
 // by using date.format() method
-const value = date.format(now,'YYYY-MM-DD HH:mm');
+// const value = date.format(now,'YYYY-MM-DD HH:mm');
 
 // var con = mysql.createConnection({
 //     host: 'localhost',
@@ -23,8 +37,6 @@ const value = date.format(now,'YYYY-MM-DD HH:mm');
 //       console.log(result);
 //     });
 //   });
-
-
   
 // Display the result
-console.log("current date and time : " + value)
+// console.log("current date and time : " + value)

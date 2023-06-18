@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <title>data page</title>
+    <link rel="stylesheet" href="/CSS/background.css">
+    <link rel="stylesheet" href="/CSS/dataStyle.css">
+    <script src="/script/angular.min.js"></script>
+    <script src="/script/data.js"></script>
+</head>
+
+<body>
+    <!-- div for jump to top -->
+    <div id="top"></div>
+
+    <!-- the flex class, from background.css -->
+    <div class="f">
+
+        <!-- the left 'aside' class in background.css, navigate to each page -->
+        <div class="left">
+            <div class="title"> 
+                <h2>Logo</h2>
+            </div>
+            <a href="/page/homepage.html">
+                <div class="navigation">
+                    <p>Home page</p>
+                </div>
+            </a> 
+            <a href="/page/managepage.html">
+                <div class="navigation">
+                    <p>Manage page</p>
+                </div>
+            </a> 
+            <a href="/page/datapage.html">
+                <div class="navigation">
+                    <p>Data page</p>
+                </div>
+            </a> 
+            <a href="/page/serverpage.html">
+                <div class="navigation">
+                    <p>Server page</p>
+                </div>
+            </a> 
+            <a href="/page/videopage.html">
+                <div class="navigation">
+                    <p>Video page</p>
+                </div>
+            </a> 
+        </div>
+
+        <!-- the right class in background.css, use to hold page infomation -->
+        <div class="right" ng-controller='controller1 as ctrl1'>
+            <!-- page title/name -->
+            <div class="title"> 
+                <h2>Data page</h2>
+            </div>
+
+            <!-- page information -->
+            <!-- each table have five data point in a day of temperature, humidity, and brightness -->
+            <div class="table-name">
+                <p>Temperature : {{ctrl1.home[ctrl1.size].date}}</p>
+            </div>
+            <div class="table">
+                <table>
+                    <tr>
+                        <th ng-repeat="data in ctrl1.home"> {{data.time}} </th>
+                        <!-- <th> 12:30 </th>
+                        <th> 13:00 </th>
+                        <th> 13:30 </th>
+                        <th> 14:00 </th> -->
+                    </tr>
+                    <tr>
+                        <th ng-repeat="data in ctrl1.home">{{data.C}} C</th>
+                        <!-- <th>21 C</th>
+                        <th>21 C</th>
+                        <th>21 C</th>
+                        <th>21 C</th> -->
+                    </tr>
+
+                </table>
+
+            </div>
+
+            <div class="table-name">
+                <p>Humidity :</p>
+            </div>
+
+            <div class="table">
+                <table>
+                    <tr>
+                        <th ng-repeat="data in ctrl1.home"> {{data.time}} </th>
+                        <!-- <th> 12:30 </th>
+                        <th> 13:00 </th>
+                        <th> 13:30 </th>
+                        <th> 14:00 </th> -->
+                    </tr>
+                    <tr>
+                        <th ng-repeat="data in ctrl1.home">{{data.H}} %</th>
+                        <!-- <th>36 %</th>
+                        <th>37 %</th>
+                        <th>38 %</th>
+                        <th>40 %</th> -->
+                    </tr>
+
+                </table>
+
+            </div>
+
+            <div class="table-name">
+                <p>Brightness :</p>
+            </div>
+
+            <div class="table">
+                <table>
+                    <tr>
+                        <th ng-repeat="data in ctrl1.home"> {{data.time}} </th>
+                        <!-- <th> 12:30 </th>
+                        <th> 13:00 </th>
+                        <th> 13:30 </th>
+                        <th> 14:00 </th> -->
+                    </tr>
+                    <tr>
+                        <th ng-repeat="data in ctrl1.home">{{data.B}}</th>
+                        <!-- <th>148</th>
+                        <th>175</th>
+                        <th>177</th>
+                        <th>106</th> -->
+                    </tr>
+
+                </table>
+
+            </div>
+
+            <div class="element-size">
+                <button ng-click="ctrl1.update(null,5)">5</button>
+                <button ng-click="ctrl1.update(null,8)">8</button>
+                <button ng-click="ctrl1.update(null,10)">10</button>
+            </div>
+
+            <div class="select">
+                <button ng-click="ctrl1.update(1)">machine 1</button>
+                <button ng-click="ctrl1.update(2)">machine 2</button>
+                <button ng-click="ctrl1.update(3)">machine 3</button>
+                <button ng-click="ctrl1.update(4)">machine 4</button>
+            </div>
+            
+
+        </div>
+
+    </div>
+
+    <!-- footer tag, hold the link to my email, github, back to homepage and back to top -->
+    <footer>
+        <a href="mailto:yhuang35@albany.edu">| Email Me |</a>
+        <a href="https://github.com/YunRuiHuang">| My Github |</a>
+        <a href="/page/homepage.html">| Homepage |</a>
+        <br>
+        <a href="#top">back to top</a>
+
+
+    </footer>
+</body>
+
+
+</html>
