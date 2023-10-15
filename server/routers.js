@@ -1,11 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const users = require('./router/users');
 const dataPort = require('./router/dataPort');
-const controller = require('./controller/controller')
 
-router.use("/controller",controller);
-router.use("/user",users);
 router.use("/data",dataPort);
 
 module.exports=router;
