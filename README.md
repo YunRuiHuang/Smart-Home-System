@@ -12,26 +12,28 @@ dev* 重写接口，使用新的页面框架（vue），并且分离代码和配
 
 ## 框架
 
-### 外部传感器
-
-- ESP32 Dev Model
-
-### 中间件
+### [网络接口](#网络接口)
 
 - NodeJs
   - Express JS
 - python
   - downloader
 
-
-
-### 数据库
+### [数据库](#数据库)
 
 - MySQL on linux
 
 ### 网页界面
 
 - Vue3 
+
+### 外部传感器
+
+- ESP32 Dev Model
+
+
+
+## 网络接口
 
 
 
@@ -59,7 +61,7 @@ dev* 重写接口，使用新的页面框架（vue），并且分离代码和配
 
 #### 环境采集
 
-table name :`envdata`
+table name :`envData`
 
 | variable name       | data type |
 | ------------------- | --------- |
@@ -70,11 +72,63 @@ table name :`envdata`
 | bright              | int       |
 | time                | timestamp |
 
-
+实现
 
 ```sql
 
 ```
 
+#### 物品记录
+
+table name :`itemName`
+
+| variable name     | data type   |
+| ----------------- | ----------- |
+| item_id (primary) | int         |
+| item_name         | varchat(10) |
+| item_class        | varchat(10) |
+| item_subclass     | varchat(10) |
+| item_unit         | varchat(4)  |
+
+table name :`foodRecode`
+
+| variable name       | data type |
+| ------------------- | --------- |
+| recode_id (primary) | int       |
+| item_id             | int       |
+| amount              | float     |
+| price               | float     |
+| time                | timestamp |
+
+table name :`foodAmount`
+
+| variable name     | data type |
+| ----------------- | --------- |
+| item_id (primary) | int       |
+| amount            | float     |
+
+实现
+
+```sql
+
+```
+
+#### 笔记
+
+table name:`notebook`
+
+| variable name       | data type |
+| ------------------- | --------- |
+| recode_id (primary) | int       |
+| recode              | text      |
+| create_time         | timestamp |
+| update_time         | timestamp |
+| archive             | boolean   |
 
 
+
+
+
+[#数据库]: 
+
+[#关于数据库]: 
