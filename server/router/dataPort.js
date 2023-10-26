@@ -4,6 +4,7 @@ const mysql = require('mysql');
 const date = require('date-and-time');
 const math = require('mathjs');
 const conf = require('../conf/database.json')
+const moment = require('moment-timezone');
 
 console.log(conf)
 var pool = mysql.createPool(conf.poolSetting)
@@ -39,7 +40,7 @@ async function runsql(sql){
     if(!temp || !humidity || !bright){
         res.send(req.params.machineId + "fail! missing data at " + date);
     }else{
-      let sql = "insert into espdata(machine_id,temp,humidity,bright,time)values(";
+      let sql = "insert into envData(machine_id,temp,humidity,bright,time)values(";
       sql = sql + machineId + ",'" + temp + "','" + humidity + "','" + bright + "','" + time + "');";
       console.log(sql);
         //TODO
@@ -58,8 +59,11 @@ async function runsql(sql){
 
 
 router.get("/",(req,res)=>{
-  let sql = "SELECT * FROM espdata";
+  let sql = "SELECT * FROM envData";
   runsql(sql).then((result)=>{
+    result.rows.forEach(row => {
+      row.time = new Date(row.time).toLocaleString(); 
+    });
     console.log(result);
     res.json(result);
   }).catch((err)=>{
@@ -69,9 +73,12 @@ router.get("/",(req,res)=>{
 });
 
 router.get("/:machineId",(req,res)=>{
-  let sql = "SELECT * FROM espdata where machine_id = ";
+  let sql = "SELECT * FROM envData where machine_id = ";
   sql = sql + req.params.machineId + ";";
   runsql(sql).then((result)=>{
+    result.rows.forEach(row => {
+      row.time = new Date(row.time).toLocaleString(); 
+    });
     console.log(result);
     res.json(result);
   }).catch((err)=>{
@@ -81,9 +88,12 @@ router.get("/:machineId",(req,res)=>{
 });
 
 router.get("/:machineId/:num",(req,res)=>{
-  let sql = "SELECT * FROM espdata where machine_id = ";
+  let sql = "SELECT * FROM envData where machine_id = ";
   sql = sql + req.params.machineId + " order by recode_id desc limit " + req.params.num + ";";
   runsql(sql).then((result)=>{
+    result.rows.forEach(row => {
+      row.time = new Date(row.time).toLocaleString(); 
+    });
     console.log(result);
     res.json(result);
   }).catch((err)=>{
@@ -93,7 +103,7 @@ router.get("/:machineId/:num",(req,res)=>{
 });
 
 router.get("/:machineId/:month/:day/:year/:hour",(req,res)=>{
-  let sql = "SELECT * FROM espdata where machine_id = ";
+  let sql = "SELECT * FROM envData where machine_id = ";
   sql = sql + req.params.machineId + " and time > ";
 
   let time = "'" + req.params.year + "-" + req.params.month + "-" + req.params.day;
@@ -108,6 +118,9 @@ router.get("/:machineId/:month/:day/:year/:hour",(req,res)=>{
   console.log(sql);
 
   runsql(sql).then((result)=>{
+    result.rows.forEach(row => {
+      row.time = new Date(row.time).toLocaleString(); 
+    });
     console.log(result);
     res.json(result);
   }).catch((err)=>{
