@@ -33,6 +33,19 @@ dev* 重写接口，使用新的页面框架（vue），并且分离代码和配
 
 
 
+## 手动配置
+
+以下为需要手动配置的内容，之后应该会加入脚本进行自动配置
+
+### ubuntu服务器
+
+- nodejs (v10.19.0) or later
+- npm (v6.14.4) or later
+- mysql (Ver 8.0.34-0ubuntu0.20.04.1 for Linux on x86_64 ((Ubuntu)))
+- python 3 (v3.8.10)
+
+
+
 ## 网络接口
 
 - /
