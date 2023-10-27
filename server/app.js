@@ -9,6 +9,9 @@ app.use(express.json());
 // to access home html page
 app.get('/',(req,res)=>{res.sendFile(path.join(__dirname,'public/index.html'))});
 
+// to access favicon.ico
+app.get('/favicon.ico',(req,res)=>{res.sendFile(path.join(__dirname,'favicon.ico'))});
+
 // to router
 app.use("/routers",routers);
 
