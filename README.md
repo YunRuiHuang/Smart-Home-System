@@ -39,10 +39,47 @@ dev* 重写接口，使用新的页面框架（vue），并且分离代码和配
 
 ### ubuntu服务器
 
-- nodejs (v10.19.0) or later
-- npm (v6.14.4) or later
-- mysql (Ver 8.0.34-0ubuntu0.20.04.1 for Linux on x86_64 ((Ubuntu)))
+- nodejs (v10.19.0) or later `sudo apt-get install nodejs`
+- npm (v6.14.4) or later `sudo apt-get install npm`
+- mysql (Ver 8.0.34-0ubuntu0.20.04.1 for Linux on x86_64 ((Ubuntu))) `sudo apt install mysql-server`
 - python 3 (v3.8.10)
+
+### 进程管理
+
+`/etc/systemd/system/my_node_app.service`
+
+```ini
+[Unit]
+Description=My Node.js Application
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/node /path/to/your/app.js
+WorkingDirectory=/path/to/your/app/directory
+Restart=always
+User=<YOUR_USER>
+Group=<YOUR_USER>
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+Environment=PORT=3000
+
+[Install]
+WantedBy=multi-user.target
+
+```
+
+通过systemctl启动
+
+```shell
+#Start the service:
+sudo systemctl start my_node_app
+#Enable it to start on boot:
+sudo systemctl enable my_node_app
+#Check the Status
+sudo systemctl status my_node_app
+```
+
+
 
 
 
@@ -321,6 +358,16 @@ GET /source/video/12345.mp4
 
 
 ## 数据库
+
+### 配置数据库
+
+#### 用户
+
+创建新用户，并允许以密码方式验证
+
+`CREATE USER 'username'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';`
+
+
 
 ### 连接配置文件 
 
