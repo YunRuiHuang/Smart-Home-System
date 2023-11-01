@@ -1,0 +1,10 @@
+{
+    "public_folder":{
+        "image_path" : "public/images/"  ,      
+        "script_path" : "public/scripts/",
+        "CSS_path" : "public/styles/",
+        "html_path" : "public/"
+    },
+
+    "nas_server_path" : "/run/user/1000/gvfs/smb-share:server=10.0.0.82,share=file/"
+}

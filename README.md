@@ -1,55 +1,56 @@
 # 智能家居网络框架
 
-更新于：02/04/2023
+更新于：11/1/2023
 
 ## 引言
 
-当前的家庭网络以及硬件情况是，我有一台主路由以及一台二级路由，两者通过一台八口千兆交换机连接，同时挂载在交换机上的有一台FreeNAS服务器（12核+12G+2*4T硬盘rain2),一台笔记本做Linux服务器，一台闲置的树莓派，以及我的台式电脑。总之，我在思考着是否能做点什么，这时候，手边的Arduino给了我灵感。我完全可以搭建一个基于WiFi的智能家居网络呀，虽然不及蓝牙或者Zwave之类的省电，但是小功耗部件顶多勤换电池，大功耗部件直接走网线POE又不是不行，以及ESP32-wifi提供了廉价的硬件基板。只能说也不是不行。
+这个项目是用于客制化智能家居系统，方便配置自制的IoT硬件，和自定义的访问界面
+
+- [x] dev* 重写接口
+  - [x] 温湿度数据接口
+  - [x] 文件接口
+  - [x] 配置ESP32
+- [ ] 添加新接口
+  - [ ] 视频下载接口
+  - [ ] 笔记接口
+  - [ ] 物品记录接口
+  - [ ] 身份验证接口
+  - [ ] 后台管理接口
+- [ ] 使用新的页面框架（vue）
+  - [ ] 用户界面
+    - [ ] 温湿度查看
+    - [ ] 下载进度查看
+    - [ ] 视频界面
+    - [ ] 笔记
+    - [ ] 物品统计
+  - [ ] 后台控制面板界面
+    - [ ] 数据库配置
+    - [ ] 路径配置
+- [ ] 安卓客户端
+  - [ ] 笔记本
+- [ ] ESP32开发，打印外壳
+  - [ ] 温湿度传感器
+  - [ ] 物品记录终端
+  - [ ] 控制面板终端
 
 
 
-## 框架结构
+## 框架
 
-- 本框架由四大部分组成
-  1. 外部传感器 （主要使用ESP32-wifi提供网络连接以及一些基础接口）
-     1. 硬件使用 ESP32 Dev Model，使用Arduino IDE开发，代码更新至[endpoint](endpoint)
-  2. 中间件连接 （搭建与树莓派的ExpressJs提供接口接收数据并存入数据库）
-     1. 树莓派2b的性能太差了，无法在这上面开发（同时通过VScode和ssh操作会崩溃）
-     2. 换回了Linux服务器上开发
-  3. 数据库 （由FreeNAS提供稳定的数据存储环境来搭建数据库）
-     1. 数据库也放回了Linux服务器上面，方便nodejs访问
-  4. 用户界面 （Linux服务器可以承担这部分功能，稳定性并不做要求）
-     1. 大概也会由expressjs提供服务
-- 一些难点
-  - 硬件方面，完全没接触过ESP32，所以如何连接WiFi以及如何处理数据都会比较陌生，所以先尝试只采集温度及湿度数据
-    - 已完成采集温度，湿度，光亮度
-    - 可通过wifi把数据post至中间件
-  - 中间件部分，如何把web API部署至树莓派任值得查询
-    - 已完成，主要是部署nodejs至树莓派
-  - 同时，部署各种网络组件都会涉及到反向代理的问题，apache一类的代理方案都需要了解
-    - 已放弃，expressjs提供的对应的功能
-  - 数据库以及如何在FreeNAS部署数据库，也需要学习
-    - 已放弃，数据库部署至Linux
-  - 用户界面的web设计，了解web三大件与实际生产之间还是有较大差距
-    - 待完成
+### [网络接口](#网络接口)
 
+- NodeJs
+  - Express JS
+- python
+  - downloader
 
+### [数据库](#数据库)
 
-- 更新于02/04/2023
-  - 硬件部分
-    - esp32需要对应的外壳
-    - 温湿度传感器需要校正
-  - 中间件
-    - 添加更多的数据库接口来操作数据（如删除，按条件搜索）
-    - 需要添加身份验证接口
-  - 前端
-    - 需要开发用户界面，确定界面需求
+- MySQL on linux
 
+### 网页界面
 
-
-
-
-## 需求
+- Vue3 
 
 ### 外部传感器
 
@@ -57,25 +58,464 @@
 
 
 
-### 中间件
+## 手动配置
 
-- NodeJs
-  - Express JS
+以下为需要手动配置的内容，之后应该会加入脚本进行自动配置
+
+### ubuntu服务器
+
+- nodejs (v10.19.0) or later `sudo apt-get install nodejs`
+- npm (v6.14.4) or later `sudo apt-get install npm`
+- mysql (Ver 8.0.34-0ubuntu0.20.04.1 for Linux on x86_64 ((Ubuntu))) `sudo apt install mysql-server`
+- python 3 (v3.8.10)
+
+### 进程管理
+
+`/etc/systemd/system/my_node_app.service`
+
+```ini
+[Unit]
+Description=My Node.js Application
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/node /path/to/your/app.js
+WorkingDirectory=/path/to/your/app/directory
+Restart=always
+User=<YOUR_USER>
+Group=<YOUR_USER>
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+Environment=PORT=3000
+
+[Install]
+WantedBy=multi-user.target
+
+```
+
+通过systemctl启动
+
+```shell
+#Start the service:
+sudo systemctl start my_node_app
+#Enable it to start on boot:
+sudo systemctl enable my_node_app
+#Check the Status
+sudo systemctl status my_node_app
+```
 
 
 
 
-### 数据库
 
-- Linux搭建MySQL数据库
+## 网络接口
+
+- /
+  * routers/
+    * [data/...](#/routers/data/)
+  * [source/](#/source/)
+    * image/
+    * script/
+    * css/
+    * html/
+    * video/
 
 
 
-### 客户端
-
-- web三大件
-- Vue3 或其他
-- Express JS
 
 
+### /routers/data/
+
+#### Create Data Entry
+
+**Endpoint**: `POST /routers/data/:machineId`
+
+Adds a new data entry for a specific machine.
+
+**Request**:
+
+- **Params**:
+  - `machineId` (integer, path): The ID of the machine.
+- **Body**:
+  - `temp` (float): Temperature data.
+  - `humidity` (float): Humidity data.
+  - `bright` (integer): Brightness data.
+
+**Response**:
+
+- `200 OK`: Data entry added successfully.
+- `400 Bad Request`: Missing data or incorrect format.
+
+**sample require**
+
+```http
+POST /routers/data/1
+{
+  "temp": 23.5, 
+  "humidity": 60.2, 
+  "bright": 800
+}
+```
+
+
+
+#### Get All Data Entries
+
+**Endpoint**: `GET /routers/data/`
+
+Retrieves all data entries.
+
+**Response**:
+
+- `200 OK`: List of data entries retrieved successfully.
+
+**sample require**
+
+```http
+GET /routers/data/
+```
+
+
+
+#### Get Data Entries by Machine ID
+
+**Endpoint**: `GET /routers/data/:machineId`
+
+Retrieves data entries for a specific machine.
+
+**Request**:
+
+- **Params:**
+  - `machineId` (integer, path): The ID of the machine.
+
+**Response**:
+
+- `200 OK`: List of data entries for the specified machine retrieved successfully.
+- `404 Not Found`: No data entries found for the specified machine.
+
+**sample require**
+
+```http
+GET /routers/data/1
+```
+
+
+
+#### Get Last N Data Entries by Machine ID
+
+**Endpoint**: `GET /routers/data/:machineId/:num`
+
+Retrieves the last N data entries for a specific machine.
+
+**Request**:
+
+- **Params:**
+  - `machineId` (integer, path): The ID of the machine.
+  - `num` (integer, path): The number of data entries to retrieve.
+
+**Response**:
+
+- `200 OK`: List of last N data entries for the specified machine retrieved successfully.
+- `404 Not Found`: No data entries found for the specified machine.
+
+**sample require**
+
+```http
+GET /routers/data/1/10
+```
+
+
+
+#### Get Data Entries by Date and Time
+
+**Endpoint**: `GET /routers/data/:machineId/:month/:day/:year/:hour`
+
+**Description**: Retrieves data entries for a specific machine within a given date and time range.
+
+**Request**:
+
+- **Params:**
+  - `machineId` (integer, path): The ID of the machine.
+  - `month` (integer, path): Month (numeric, 1-12).
+  - `day` (integer, path): Day (numeric, 1-31).
+  - `year` (integer, path): Year (numeric).
+  - `hour` (integer, path): Hour (numeric, 0-23).
+
+**Response**:
+
+- `200 OK`: List of data entries for the specified machine within the specified date and time range retrieved successfully.
+- `400 Bad Request`: Invalid date or time format.
+
+**sample require**
+
+```http
+GET /routers/data/1/1/1/2023/0
+```
+
+
+
+### /source/
+
+#### Get Image by ID
+
+**Endpoint**: `GET /source/image/:id`
+
+This endpoint allows you to retrieve an image by providing its unique ID.
+
+**Request**
+
+- **Params:**
+  - `id` (string): The unique ID of the image.
+
+**Response**
+
+- `200 OK`: The image is successfully retrieved.
+- `404 Not Found`: The image with the provided ID does not exist.
+
+**Sample Request**
+
+```http
+GET /source/image/12345.jpg
+```
+
+
+
+#### Get Script by ID
+
+**Endpoint**: `GET /script/:id`
+
+This endpoint allows you to retrieve a script file by providing its unique ID.
+
+**Request**
+
+- **Params:**
+  - `id` (string): The unique ID of the script file.
+
+**Response**
+
+- `200 OK`: The script file is successfully retrieved.
+- `404 Not Found`: The script file with the provided ID does not exist.
+
+**Sample Request**
+
+```http
+GET /source/script/12345.js
+```
+
+
+
+#### Get CSS by ID
+
+**Endpoint**: `GET /css/:id`
+
+This endpoint allows you to retrieve a CSS file by providing its unique ID.
+
+**Request**
+
+- Params:
+
+  - `id` (string): The unique ID of the CSS file.
+
+**Response**
+
+- `200 OK`: The CSS file is successfully retrieved.
+- `404 Not Found`: The CSS file with the provided ID does not exist.
+
+**Sample Request**
+
+```http
+GET /source/css/12345.css
+```
+
+
+
+#### Get HTML by ID
+
+**Endpoint**: `GET /html/:id`
+
+This endpoint allows you to retrieve an HTML file by providing its unique ID.
+
+**Request**
+
+- Params:
+
+  - `id` (string): The unique ID of the HTML file.
+
+**Response**
+
+- `200 OK`: The HTML file is successfully retrieved.
+- `404 Not Found`: The HTML file with the provided ID does not exist.
+
+**Sample Request**
+
+```http
+GET /source/html/12345.html
+```
+
+
+
+#### Get Video by Name
+
+**Endpoint**: `GET /video/:video`
+
+This endpoint allows you to retrieve a video by providing its name.
+
+**Request**
+
+- **Params:**
+  - `video` (string): The name of the video file.
+- **Query Parameters**:
+  - `path` (string, optional): An array representing the directory path. If provided, the video will be searched in the specified directory.
+
+**Response**
+
+- `200 OK`: The video is successfully retrieved.
+- `404 Not Found`: The video with the provided name does not exist.
+
+**Sample Request**
+
+```http
+GET /source/video/12345.mp4
+```
+
+
+
+
+
+## 数据库
+
+### 配置数据库
+
+#### 用户
+
+创建新用户，并允许以密码方式验证
+
+`CREATE USER 'username'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';`
+
+
+
+### 连接配置文件 
+
+`./server/conf/database.json`
+
+```json
+{
+    "poolSetting" : {
+        "connectionLimit" : 10,
+        "host": "数据库地址",
+        "user": "用户名",
+        "password": "密码",
+        "database": "数据库名称"
+      }
+}
+```
+
+### 数据表格式
+
+#### 环境采集
+
+table name :`envData`
+
+| variable name                      | data type |
+| ---------------------------------- | --------- |
+| recode_id (PRIMARY AUTO_INCREMENT) | int       |
+| machine_id                         | int       |
+| temp                               | float     |
+| humidity                           | float     |
+| bright                             | int       |
+| time                               | timestamp |
+
+实现
+
+```sql
+CREATE TABLE envData (
+    recode_id INT PRIMARY KEY AUTO_INCREMENT,
+    machine_id INT,
+    temp FLOAT,
+    humidity FLOAT,
+    bright INT,
+    time TIMESTAMP
+);
+
+```
+
+#### 物品记录
+
+table name :`itemName`
+
+| variable name                    | data type   |
+| -------------------------------- | ----------- |
+| item_id (PRIMARY AUTO_INCREMENT) | int         |
+| item_name                        | varchat(10) |
+| item_class                       | varchat(10) |
+| item_subclass                    | varchat(10) |
+| item_unit                        | varchat(4)  |
+
+table name :`foodRecode`
+
+| variable name                      | data type |
+| ---------------------------------- | --------- |
+| recode_id (PRIMARY AUTO_INCREMENT) | int       |
+| item_id                            | int       |
+| amount                             | float     |
+| price                              | float     |
+| time                               | timestamp |
+
+table name :`foodAmount`
+
+| variable name      | data type |
+| ------------------ | --------- |
+| item_id (PRIMARY ) | int       |
+| amount             | float     |
+
+实现
+
+```sql
+CREATE TABLE itemName (
+    item_id INT PRIMARY KEY AUTO_INCREMENT,
+    item_name VARCHAR(10),
+    item_class VARCHAR(10),
+    item_subclass VARCHAR(10),
+    item_unit VARCHAR(4)
+);
+
+CREATE TABLE foodRecode (
+    recode_id INT PRIMARY KEY AUTO_INCREMENT,
+    item_id INT,
+    amount FLOAT,
+    price FLOAT,
+    time TIMESTAMP
+);
+
+CREATE TABLE foodAmount (
+    item_id INT PRIMARY KEY,
+    amount FLOAT
+);
+
+```
+
+#### 笔记
+
+table name:`notebook`
+
+| variable name                      | data type |
+| ---------------------------------- | --------- |
+| recode_id (PRIMARY AUTO_INCREMENT) | int       |
+| recode                             | text      |
+| create_time                        | timestamp |
+| update_time                        | timestamp |
+| archive                            | boolean   |
+
+实现
+
+```sql
+CREATE TABLE yourTableName (
+    recode_id INT PRIMARY KEY AUTO_INCREMENT,
+    recode TEXT,
+    create_time TIMESTAMP,
+    update_time TIMESTAMP,
+    archive BOOLEAN
+);
+
+```
 
