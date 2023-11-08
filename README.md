@@ -12,7 +12,7 @@
   - [x] 配置ESP32
 - [ ] 添加新接口
   - [ ] 视频下载接口
-  - [ ] 笔记接口
+  - [x] 笔记接口
   - [ ] 物品记录接口
   - [ ] 身份验证接口
   - [ ] 后台管理接口
@@ -113,6 +113,7 @@ sudo systemctl status my_node_app
 - /
   * routers/
     * [data/...](#/routers/data/)
+    * note/...
   * [source/](#/source/)
     * image/
     * script/
@@ -251,6 +252,106 @@ GET /routers/data/1/10
 ```http
 GET /routers/data/1/1/1/2023/0
 ```
+
+
+
+### /routers/note/
+
+#### GET All Notebooks
+
+**Endpoint**: `GET /`
+
+Retrieves all records from the `notebook` table.
+
+**Response**: 
+- `200 OK`: Returns a JSON array of all records with formatted date strings.
+
+
+
+#### GET Notebook by ID
+
+**Endpoint**: `GET /:recode_id`
+
+**Request**:
+
+- **Params:**
+
+     - `recode_id` (integer): The ID of the record to be archived.
+
+Retrieves a specific record from the `notebook` table by `recode_id`.
+
+**Response**: 
+- `200 OK`: Returns a JSON object with the record's details and formatted date strings.
+
+
+
+#### POST New Notebook Entry
+
+**Endpoint**: `POST /`
+
+Adds a new record to the `notebook` table with the provided `recode`.
+
+**Request**:
+
+- **Body:**
+- `recode` (string): The content of the notebook entry.
+
+**Response**: 
+- `200 OK`: Returns the newly created record as a JSON object with formatted date strings.
+
+
+
+#### POST Archive Notebook Entry
+
+**Endpoint**: `POST /:recode_id`
+
+ Archives a specific record by setting its `archive` flag to `true`.
+
+**Request**:
+
+- **Params:**
+
+     - `recode_id` (integer): The ID of the record to be archived.
+
+**Response**: 
+- `200 OK`: Returns a JSON object indicating the operation's success.
+
+
+
+#### DELETE Archive Notebook Entry
+
+**Endpoint**: `DELETE /:recode_id`
+
+Deletes a specific record by setting its `archive` flag to `true`.
+
+**Request**:
+
+- **Params:**
+
+     - `recode_id` (integer): The ID of the record to be deleted.
+
+**Response**: 
+- `200 OK`: Returns a JSON object indicating the operation's success.
+
+
+
+#### PUT Update Notebook Entry
+
+**Endpoint**: `PUT /:recode_id`
+
+Updates the content of a specific record.
+
+**Request**:
+
+- **Params:**
+
+     - `recode_id` (integer): The ID of the record to be updated.
+- **Body:**
+     - `recode` (string): The updated content of the notebook entry.
+
+   - **Response**: Returns a JSON object indicating the operation's success.
+
+
 
 
 
@@ -509,7 +610,7 @@ table name:`notebook`
 实现
 
 ```sql
-CREATE TABLE yourTableName (
+CREATE TABLE noteb (
     recode_id INT PRIMARY KEY AUTO_INCREMENT,
     recode TEXT,
     create_time TIMESTAMP,
