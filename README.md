@@ -13,7 +13,7 @@
 - [ ] 添加新接口
   - [ ] 视频下载接口
   - [x] 笔记接口
-  - [ ] 物品记录接口
+  - [x] 物品记录接口
   - [ ] 身份验证接口
   - [ ] 后台管理接口
 - [ ] 使用新的页面框架（vue）
@@ -554,20 +554,20 @@ table name :`itemName`
 
 table name :`foodRecode`
 
-| variable name                      | data type |
-| ---------------------------------- | --------- |
-| recode_id (PRIMARY AUTO_INCREMENT) | int       |
-| item_id                            | int       |
-| amount                             | float     |
-| price                              | float     |
-| time                               | timestamp |
+| variable name                               | data type |
+| ------------------------------------------- | --------- |
+| recode_id (PRIMARY AUTO_INCREMENT)          | int       |
+| item_id (foreign key references `itemName`) | int       |
+| amount                                      | float     |
+| price                                       | float     |
+| time                                        | timestamp |
 
 table name :`foodAmount`
 
-| variable name      | data type |
-| ------------------ | --------- |
-| item_id (PRIMARY ) | int       |
-| amount             | float     |
+| variable name                                        | data type |
+| ---------------------------------------------------- | --------- |
+| item_id (PRIMARY, foreign key references `itemName`) | int       |
+| amount                                               | float     |
 
 实现
 
@@ -585,12 +585,14 @@ CREATE TABLE foodRecode (
     item_id INT,
     amount FLOAT,
     price FLOAT,
-    time TIMESTAMP
+    time TIMESTAMP,
+    FOREIGN KEY (item_id) REFERENCES itemName(item_id)
 );
 
 CREATE TABLE foodAmount (
     item_id INT PRIMARY KEY,
-    amount FLOAT
+    amount FLOAT,
+    FOREIGN KEY (item_id) REFERENCES itemName(item_id)
 );
 
 ```
@@ -610,7 +612,7 @@ table name:`notebook`
 实现
 
 ```sql
-CREATE TABLE noteb (
+CREATE TABLE notebook (
     recode_id INT PRIMARY KEY AUTO_INCREMENT,
     recode TEXT,
     create_time TIMESTAMP,
