@@ -66,7 +66,7 @@ router.get("/:recode_id",(req,res)=>{
 router.post("/",(req,res)=>{
     const recode = req.body.recode;
     const now = new Date();
-    const time = date.format(now,'YYYY-MM-DD HH:mm');
+    const time = date.format(now,'YYYY-MM-DD HH:mm:ss');
     if(!recode){
         res.send("fail! missing data at " + time);
     }else{
@@ -90,7 +90,7 @@ router.post("/",(req,res)=>{
 router.post("/:recode_id",(req,res)=>{
     const id = req.params.recode_id;
     const now = new Date();
-    const time = date.format(now,'YYYY-MM-DD HH:mm');
+    const time = date.format(now,'YYYY-MM-DD HH:mm:ss');
     let sql = "update notebook set archive = 0, update_time = '" + time + "' where recode_id = " + id + ";"
     runsql(sql).then((result)=>{
         console.log(result);
@@ -105,7 +105,7 @@ router.post("/:recode_id",(req,res)=>{
 router.delete("/:recode_id",(req,res)=>{
     const id = req.params.recode_id;
     const now = new Date();
-    const time = date.format(now,'YYYY-MM-DD HH:mm');
+    const time = date.format(now,'YYYY-MM-DD HH:mm:ss');
     let sql = "update notebook set archive = 1, update_time = '" + time + "' where recode_id = " + id + ";"
     runsql(sql).then((result)=>{
         console.log(result);
@@ -122,7 +122,7 @@ router.put("/:recode_id",(req,res)=>{
     const id = req.params.recode_id;
     const recode = req.body.recode;
     const now = new Date();
-    const time = date.format(now,'YYYY-MM-DD HH:mm');
+    const time = date.format(now,'YYYY-MM-DD HH:mm:ss');
     if(!recode){
         res.send("fail! missing data at " + time);
     }else{
