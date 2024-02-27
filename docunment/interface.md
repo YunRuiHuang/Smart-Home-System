@@ -638,3 +638,16 @@ This endpoint allows you to retrieve a video by providing its name.
 ```http
 GET /source/video/12345.mp4
 ```
+
+### Music Interface
+#### Get Music Playing state
+**Endpoint**: `GET /music/state`
+
+#### Change Music Playing state
+**Endpoint**: `PUT /music/state`
+
+#### Get Playing Music
+**Endpoint**: `GET /music/playing`
+
+#### Change Playing Music
+**Endpoint**: `POST /music/playing`

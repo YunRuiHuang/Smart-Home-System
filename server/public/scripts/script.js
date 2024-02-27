@@ -36,3 +36,41 @@ fetch('/routers/data/1/10')
         // Handle errors here
         console.error('Error:', error);
     });
+
+
+
+document.getElementById("myButton").addEventListener("click", function() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("PUT", "/routers/music/state", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // Request was successful, handle response if needed
+            console.log("PUT request successful");
+        } else {
+            // Request failed or is still processing
+            console.error("Error in PUT request");
+        }
+    };
+    xhr.send();
+    fetchMusicInfo();
+});
+
+// Function to make a GET request and update the content of the <p> tag
+function fetchMusicInfo() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/routers/music/playing", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // Request was successful, update <p> tag content with response
+            var responseData = JSON.parse(xhr.responseText);
+            document.getElementById("musicInfo").innerText = "Currently playing: " + responseData.playing;
+        } else {
+            // Request failed or is still processing
+            console.error("Error in GET request");
+        }
+    };
+    xhr.send();
+}
+
+// Call the function to fetch music information when the page loads
+window.onload = fetchMusicInfo;
