@@ -7,6 +7,7 @@
     * [data/...](#Data Interface)
     * [note/...](#Notebook Interface)
     * [item/...](#Item Recode Interface)
+    * [music/...](#Music Interface)
   * [source/](#Resource Interface)
     * [image/](#Get Image by ID)
     * [script/](#Get Script by ID)
@@ -638,3 +639,82 @@ This endpoint allows you to retrieve a video by providing its name.
 ```http
 GET /source/video/12345.mp4
 ```
+
+
+
+
+
+### Music Interface
+
+#### Get Music Playing state
+**Endpoint**: `GET /music/state`
+
+This endpoint allows you to check the music playing state.
+
+**Response**
+
+- `200 OK`: Successfully get the music state.
+
+**Sample Request**
+
+```http
+GET /router/music/state
+```
+
+
+
+#### Change Music Playing state
+**Endpoint**: `PUT /music/state`
+
+This endpoint allows you to change the music playing state.
+
+**Response**
+
+- `200 OK`: Successfully change the music state.
+
+**Sample Request**
+
+```http
+PUT /router/music/state
+```
+
+
+
+#### Get Playing Music
+**Endpoint**: `GET /music/playing`
+
+This endpoint allows you to check the name of playing music.
+
+**Response**
+
+- `200 OK`: Successfully get the music name.
+
+**Sample Request**
+
+```http
+GET /router/music/playing
+```
+
+
+
+#### Change Playing Music
+**Endpoint**: `POST /music/playing
+
+This endpoint allows you to change the name of playing music.
+
+**Request**
+
+- Body:
+
+  - `playing` (string): The name of playing m.
+
+**Response**
+
+- `200 OK`: Successfully get the music state.
+
+**Sample Request**
+
+```http
+POST /router/music/playing
+```
+
