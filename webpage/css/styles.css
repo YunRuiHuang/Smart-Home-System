@@ -1,0 +1,50 @@
+.container {
+  display: grid;
+  grid-template-rows: auto 1fr; /* First row for the top section, second row for the bottom sections */
+  grid-template-columns: 30% 70%; /* Two columns for the bottom sections */
+  height: 100vh; /* Full height of the viewport */
+}
+
+header{
+  background-color: rgb(96, 223, 134);
+  height: 50px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 1px;
+  box-sizing: border-box; 
+  grid-column: span 2;
+}
+
+#title-text{
+  color: black;
+  font-size: 30px;
+  position: fixed;
+  left: 50%;
+  top: -3%;
+}
+
+#title-clock{
+  color: black;
+  font-size: 20px;
+  position: fixed;
+  right: 3%;
+  top: -1%;
+}
+
+nav, .right {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+nav {
+  background-color: rgb(46, 12, 240);
+  grid-row: 2; /* Places the left section in the second row */
+  grid-column: 1; /* Places the left section in the first column */
+}
+
+.right {
+  grid-row: 2; /* Places the right section in the second row */
+  grid-column: 2; /* Places the right section in the second column */
+}
