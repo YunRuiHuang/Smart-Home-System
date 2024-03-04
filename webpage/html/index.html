@@ -2,22 +2,55 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 
 <body>
-  <header>
-    <p id="title-text" class="title-text">Home Page</p>
-    <p id="title-clock" class="title-clock">%time%</p>
-  </header>
+  <div class="f">
 
-  <nav>
+    <div class="header">
+      <p id="title" class="title">title</p>
+      <p id="title-time">%time%</p>
+    </div>
 
-  </nav>
+    <div class="center">
+      
+      <div class="navigate">
+        <div class="navigate-control">
+          <img src="../img/X.jpg" alt="" style="height: 30px; width: 30px;">
+        </div>
 
-  <div class="right">
+        <a href="homepage.html">
+          <div class="navigate-label">
+              <p>Home page</p>
+          </div>
+        </a> 
+  
+        <a href="homepage1.html">
+          <div class="navigate-label">
+              <p>Home page 1</p>
+          </div>
+        </a> 
+  
+      </div>
+  
+      <div class="page">
+          <!-- TODO -->
+          <p id="musicInfo">Fetching music information...</p>
+          <button id="myButton">turn on/off music</button><spam id="musicState">Fetching music state...</spam>
+      </div>
+
+    </div>
+    
+
+    <div class="footer">
+      <a href="homepage.html">| Homepage |</a>
+      <br>
+      <a href="#top">back to top</a>
+    </div>
+
 
   </div>
 
