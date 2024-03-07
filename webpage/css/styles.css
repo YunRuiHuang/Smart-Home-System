@@ -79,6 +79,7 @@ html, body{
     text-align: center;
     height: auto;
     width: 100%;
+    border: 0;
   }
 
   .navigate-label{
