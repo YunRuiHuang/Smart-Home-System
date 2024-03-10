@@ -1,6 +1,5 @@
 <script setup>
-// import HelloWorld from './components/HelloWorld.vue'
-// import TheWelcome from './components/TheWelcome.vue'
+  import MusicPage from './components/MusicPage.vue'
 </script>
 
 <template>
@@ -14,44 +13,44 @@
       
       <div class="navigate">
         <div class="navigate-control">
-          <img src="components/icons/X.jpg" alt="" style="height: 30px; width: 30px;">
+          <img src="./components/icons/X.jpg" alt="" style="height: 30px; width: 30px;">
         </div>
 
-        <a href="index.html">
+        <router-link to="/">
           <div class="navigate-label">
               <p>Home</p>
           </div>
-        </a> 
+        </router-link> 
 
-        <a href="Music.html">
+        <router-link to="/music">
           <div class="navigate-label">
               <p>Music</p>
           </div>
-        </a> 
+        </router-link> 
 
-        <a href="HomeStatus.html">
+        <router-link to="/music">
           <div class="navigate-label">
               <p>Home Status</p>
           </div>
-        </a> 
-
-      </div>
-
-      <div class="page">
-        <!-- TODO -->
-      </div>
+        </router-link> 
 
     </div>
 
-
-    <div class="footer">
-      <a href="index.html">| Homepage |</a>
-      <br>
-      <a href="#top">back to top</a>
+    <div class="page">
+        <MusicPage />
     </div>
-
 
   </div>
+
+
+<div class="footer">
+  <a href="index.html">| Homepage |</a>
+  <br>
+  <a href="#top">back to top</a>
+</div>
+
+
+</div>
 
 
   <!-- <main>
@@ -60,11 +59,6 @@
 </template>
 
 <style scoped>
-html, body{
-  height: 100%;
-  margin: 0;
-}
-
 .f{
   display: flex;
   flex-direction: column;
