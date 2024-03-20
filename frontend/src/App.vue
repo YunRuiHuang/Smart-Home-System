@@ -1,7 +1,3 @@
-<script setup>
-  import MusicPage from './components/MusicPage.vue'
-</script>
-
 <template>
   <div class="f">
 
@@ -10,55 +6,62 @@
     </div>
 
     <div class="center">
-      
       <div class="navigate">
         <div class="navigate-control">
-          <img src="./components/icons/X.jpg" alt="" style="height: 30px; width: 30px;">
+          <!-- <img src="../img/X.jpg" alt="" style="height: 30px; width: 30px;"> -->
+          <p>img</p>
         </div>
 
         <router-link to="/">
           <div class="navigate-label">
               <p>Home</p>
           </div>
-        </router-link> 
+        </router-link>
 
         <router-link to="/music">
           <div class="navigate-label">
               <p>Music</p>
           </div>
-        </router-link> 
+        </router-link>
 
-        <router-link to="/music">
+        <router-link to="/house">
           <div class="navigate-label">
               <p>Home Status</p>
           </div>
-        </router-link> 
+        </router-link>
+
+      </div>
+
+      <div class="page">
+        <router-view/>
+      </div>
 
     </div>
 
-    <div class="page">
-        <MusicPage />
+    <div class="footer">
+      <router-link to="/">| Homepage |</router-link>
+      <br>
     </div>
 
   </div>
-
-
-<div class="footer">
-  <a href="index.html">| Homepage |</a>
-  <br>
-  <a href="#top">back to top</a>
-</div>
-
-
-</div>
-
-
-  <!-- <main>
-    <TheWelcome />
-  </main> -->
 </template>
 
-<style scoped>
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  height: 100%;
+  margin: 0;
+}
+
+html, body{
+  height: 100%;
+  margin: 0;
+}
+
 .f{
   display: flex;
   flex-direction: column;
@@ -124,7 +127,6 @@
   width: 100%;
 }
 
-
 @media(max-width:600px) {
   .center{
     flex-direction: column;
@@ -147,6 +149,6 @@
     width: 100%;
   }
 
-
 }
+
 </style>
