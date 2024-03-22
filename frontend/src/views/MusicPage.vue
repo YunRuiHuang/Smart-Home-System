@@ -8,6 +8,7 @@
 </template>
 
 <script>
+
 export default {
   data () {
     return {
@@ -64,6 +65,12 @@ export default {
   },
   created () {
     this.updateMusic()
+    this.interval = setInterval(() => {
+      this.updateMusic()
+    }, 15000)
+  },
+  beforeUnmount () {
+    clearInterval(this.interval)
   }
 }
 

@@ -6,8 +6,9 @@
     </div>
 
     <div class="center">
-      <div class="navigate">
-        <div class="navigate-control">
+      <div class="hidden-navigate" v-if="!isShowNav" @click="reverstNav"></div>
+      <div class="navigate" v-if="isShowNav">
+        <div class="navigate-control" @click="reverstNav">
           <!-- <img src="../img/X.jpg" alt="" style="height: 30px; width: 30px;"> -->
           <p>img</p>
         </div>
@@ -32,7 +33,7 @@
 
       </div>
 
-      <div class="page">
+      <div class="page" :style="pageSize">
         <router-view/>
       </div>
 
@@ -45,6 +46,29 @@
 
   </div>
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      isShowNav: true,
+      pageSize: {
+        width: '85%'
+      }
+    }
+  },
+  methods: {
+    reverstNav () {
+      this.isShowNav = !this.isShowNav
+      if (this.isShowNav) {
+        this.pageSize.width = '85%'
+      } else {
+        this.pageSize.width = '99%'
+      }
+    }
+  }
+}
+</script>
 
 <style>
 #app {
@@ -115,10 +139,18 @@ html, body{
   border-style: solid;
 }
 
+.hidden-navigate{
+  text-align: center;
+  height: 100%;
+  width: 1%;
+  border: 0;
+  border-right: 2px;
+  border-style: solid;
+}
+
 .page{
   text-align: center;
   height: 100%;
-  width: 85%;
 }
 
 .footer{
